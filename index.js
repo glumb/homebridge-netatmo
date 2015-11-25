@@ -292,15 +292,16 @@ NetAtmoRepository.prototype = {
 }
 
 function NetatmoPlatform(log, config) {
+  var that = this;
   this.log = log;
   var api = new netatmo(config["auth"]);
   var ttl = typeof config["ttl"] !== 'undefined' ?  config["ttl"] : DEFAULT_CACHE_TTL;
   this.repository = new NetAtmoRepository(this.log, api, ttl);
   api.on("error", function(error) {
-    this.log('ERROR - Netatmo: ' + error);
+    that.log('ERROR - Netatmo: ' + error);
   });
   api.on("warning", function(error) {
-    this.log('WARN - Netatmo: ' + error);
+    that.log('WARN - Netatmo: ' + error);
   });
 }
 
